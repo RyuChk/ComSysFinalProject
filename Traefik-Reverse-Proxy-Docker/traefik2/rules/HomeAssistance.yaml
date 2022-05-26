@@ -1,0 +1,17 @@
+http:
+  routers:
+    ha-rtr:
+      entryPoints:
+        - https
+      rule: Host(`ha.chokporn.one`)
+      service: ha-svc
+      tls:
+        certresolver: dns-cloudflare
+  use_x_forwarded_for: true
+        
+  services:
+    ha-svc:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: 'http://172.0.0.50:8123/'

@@ -1,0 +1,19 @@
+http:
+  routers:
+    bi-rtr:
+      entryPoints:
+        - https
+      rule: Host(`bi.chokporn.one`)
+      service: bi-svc
+      middlewares:
+        - chain-oauth
+      tls:
+        certresolver: dns-cloudflare
+  use_x_forwarded_for: true
+        
+  services:
+    bi-svc:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: 'http://172.0.0.56:80/'

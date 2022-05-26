@@ -1,0 +1,18 @@
+http:
+  routers:
+    imb-rtr:
+      entryPoints:
+        - https
+      rule: Host(`www.chokporn.one`)
+      service: imb-svc
+      middlewares:
+      tls:
+        certresolver: dns-cloudflare
+  use_x_forwarded_for: true
+        
+  services:
+    imb-svc:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: 'http://172.0.0.190:80/'

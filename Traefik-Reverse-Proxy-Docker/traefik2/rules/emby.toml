@@ -1,0 +1,14 @@
+[http.routers]
+  [http.routers.emby-rtr]
+      entryPoints = ["https"]
+      rule = "Host(`emby.chokporn.one`)"
+      service = "emby-svc"
+      [http.routers.emby-rtr.tls]
+        certresolver = "dns-cloudflare"
+
+[http.services]
+  [http.services.emby-svc]
+    [http.services.emby-svc.loadBalancer]
+      passHostHeader = true
+      [[http.services.emby-svc.loadBalancer.servers]]
+        url = "http://172.0.0.51:8096" # or whatever your external host's IP:port is

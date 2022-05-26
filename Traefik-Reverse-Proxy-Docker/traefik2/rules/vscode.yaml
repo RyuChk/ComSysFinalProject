@@ -1,0 +1,18 @@
+http:
+  routers:
+    vs-rtr:
+      entryPoints:
+        - https
+      rule: Host(`vs.local.chokporn.one`)
+      service: vs-svc
+      middlewares:
+      tls:
+        certresolver: dns-cloudflare
+  use_x_forwarded_for: true
+        
+  services:
+    vs-svc:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: 'http://172.0.0.59:8080/'

@@ -1,0 +1,19 @@
+http:
+  routers:
+    k3s-rtr:
+      entryPoints:
+        - https
+      rule: Host(`k3s-dashboard.local.chokporn.one`)
+      service: k3s-svc
+      middlewares:
+      tls:
+        certresolver: dns-cloudflare
+  use_x_forwarded_for: true
+        
+  services:
+    k3s-svc:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: 'https://172.0.0.191'
+

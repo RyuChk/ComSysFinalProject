@@ -1,0 +1,3 @@
+# Aliases extracted from modules themselves.
+alias net-pf-16-proto-16-family-wireguard wireguard
+alias rtnl-link-wireguard wireguard

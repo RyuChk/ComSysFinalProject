@@ -1,0 +1,20 @@
+http:
+  routers:
+    prx-rtr:
+      entryPoints:
+        - https
+      rule: Host(`prx.local.chokporn.one`)
+      service: prx-svc
+      middlewares:
+      tls:
+        certresolver: dns-cloudflare
+  use_x_forwarded_for: true
+        
+  services:
+    prx-svc:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: 'https://172.0.0.152:8006/'
+          - url: 'https://172.0.0.153:8006/'
+          - url: 'https://172.0.0.154:8006/'
